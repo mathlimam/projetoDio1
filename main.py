@@ -1,19 +1,23 @@
-
+from system import deposito, saque, extrato, cadastrar_usuario, criar_cc, buscar_usuario
 
 menu = '''
 ESCOLHA A SUA OPÇÃO:
-SAQUE           [S]
-DEPÓSITO        [D]
-EXTRATO         [E]
-SAIR            [Q]
-
+SAQUE                   [S]
+DEPÓSITO                [D]
+EXTRATO                 [E]
+CADASTRAR USUARIO       [C]
+CADASTRAR CONTA         [X]
+SAIR                    [Q]
 => '''
 
 saldo = 0
 limite = 500
-extrato = ""
 numero_saques=0
+usuarios = []
+contas = []
+
 LIMITE_SAQUES=3
+
 
 saques = []
 depositos = []
@@ -22,49 +26,20 @@ while True:
     opcao = input(menu)
 
     if opcao == "d" or opcao == "D":
-        while True:
-            tmp = input("Digite o valor do depósito => ")
-            tmp = float(tmp)
-            if tmp >= 0: break
-            else:print("Valor invalido")
-        depositos.append(tmp)
-        saldo += (tmp)
-        print(f"Deposito realizado com sucesso. Seu saldo agora é de R$ {saldo}")
+        saldo = deposito(saldo, depositos)
 
     if opcao == "s" or opcao == "S":
-        if numero_saques<=2:
-            while True:
-                tmp = input("Digite o valor do saque (limite máximo de R$ 500,00 p/ saque => ")
-                tmp = float(tmp)
-                if tmp <= 500 and tmp >=0: break
-                else:print("Valor invalido")
-            saques.append(tmp)
-            saldo -= tmp
-            numero_saques +=1
-            print(f"Saque realizado com sucesso. Seu saldo agora é de R$ {saldo}")
-        else: print("limite de saque diario atingido")
-            
+        saldo = saque(saldo = saldo, saques = saques, numero_saques = numero_saques)
 
     if opcao == "e" or opcao == "E":
-        somasaque = 0
-        somadeposito = 0
-        print("extrato bancário".center(20))
-        print("")
-        print("Saques:")
-        for i in range(len(saques)):
-            somasaque += saques[i]
-            print(f"{i+1}. -R$ {saques[i]:,.2f}")
-        print("")
-        print("Depósitos")
-        for i in range(len(depositos)):
-            somadeposito += depositos[i]
-            print(f"{i+1}. R$ {depositos[i]:,.2f}")
+        extrato(saques, depositos = depositos)
 
-        print(f"total de Depósitos => R$ {somadeposito:,.2f}".center(20))
-        print(f"total de Saques => -R$ {somasaque:,.2f}")
-        print(f"saldo final => R$ {(somadeposito - somasaque):,.2f}")
+    if opcao == "c" or opcao == "C":
+        cadastrar_usuario(usuarios)
+
+    if opcao == "x" or opcao == "X":
+        criar_cc(contas=contas, usuarios=usuarios)
+        print(contas)
 
     if opcao == "q" or opcao == "Q":
         break;
-
-
