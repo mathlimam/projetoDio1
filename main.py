@@ -1,4 +1,4 @@
-from system import deposito, saque, extrato, cadastrar_usuario, criar_cc, buscar_usuario
+from classes import MainMenu as mn
 
 menu = '''
 ESCOLHA A SUA OPÇÃO:
@@ -10,36 +10,27 @@ CADASTRAR CONTA         [X]
 SAIR                    [Q]
 => '''
 
-saldo = 0
-limite = 500
-numero_saques=0
 usuarios = []
 contas = []
-
-LIMITE_SAQUES=3
-
-
-saques = []
-depositos = []
 
 while True:
     opcao = input(menu)
 
     if opcao == "d" or opcao == "D":
-        saldo = deposito(saldo, depositos)
+        mn.deposito(usuarios)
 
     if opcao == "s" or opcao == "S":
-        saldo = saque(saldo = saldo, saques = saques, numero_saques = numero_saques)
+        mn.saque(usuarios)
 
     if opcao == "e" or opcao == "E":
-        extrato(saques, depositos = depositos)
-
+        mn.extrato(usuarios)
+       
     if opcao == "c" or opcao == "C":
-        cadastrar_usuario(usuarios)
+        mn.criar_usuario(usuarios) 
 
     if opcao == "x" or opcao == "X":
-        criar_cc(contas=contas, usuarios=usuarios)
-        print(contas)
-
+        mn.cc(usuarios, contas)
+       
     if opcao == "q" or opcao == "Q":
-        break;
+        break
+       
